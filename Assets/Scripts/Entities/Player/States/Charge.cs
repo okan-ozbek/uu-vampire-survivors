@@ -1,6 +1,7 @@
 ﻿using Configs;
 using Controllers;
 using Controllers.Player;
+using UnityEngine;
 
 namespace Entities.Player.States
 {
@@ -25,13 +26,18 @@ namespace Entities.Player.States
 
         protected override void OnUpdate()
         {
-            _isFinished = PlayerInputController.AttackKeyReleased;
-            
+            if (PlayerInputController.AttackKeyReleased)
+            {
+                _isFinished = true;
+            }
+
             ChargeTimer();
         }
 
         protected override void OnExit()
         {
+            Debug.Log("Charge exit");
+            
             ResetParameters();
         }
 

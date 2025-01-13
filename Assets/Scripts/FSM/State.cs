@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace FSM
 {
@@ -27,21 +28,23 @@ namespace FSM
 
         public void Enter()
         {
+            TransitionSubState();
+            
             OnEnter();
-            SubState?.OnEnter();
+            SubState?.Enter();
         }
         
         public void Exit()
         {
-            SubState?.OnEnter();
+            SubState?.Exit();
             OnExit();
         }
         
         public void Update()
         {
             OnUpdate();
-            SubState?.OnUpdate();
-            
+            SubState?.Update();
+
             Transition();
             TransitionSubState();
         }
@@ -79,11 +82,11 @@ namespace FSM
         {
             Transition transition = GetTransition(Transitions);
             
-            if (transition == null || transition.To == typeof(State))
+            if (transition == null)
             {
                 return;
             }
-
+            
             Exit();
             if (IsRootState)
             {
@@ -94,8 +97,8 @@ namespace FSM
             {
                 if (ParentState != null)
                 {
+                    // TODO I think this needs an on enter and exit, not sure tho'
                     ParentState.SubState = StateMachine.Factory.GetState(transition.To);
-                    ParentState.SubState.Enter();    
                 }
             }
         }

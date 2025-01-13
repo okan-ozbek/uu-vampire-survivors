@@ -24,8 +24,6 @@ namespace Entities.Player.States
             Accelerate();
             Decelerate();
             Brake();
-
-            Debug.Log(Core.Data.canDash && PlayerInputController.DashKeyPressed && PlayerInputController.MovementDirection != Vector3.zero && _velocity != Vector3.zero);
             
             Core.Body.linearVelocity = _velocity;
         }

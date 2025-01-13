@@ -18,7 +18,6 @@ namespace Entities.Player
         
         public PlayerData Data => data;
         public Rigidbody2D Body { get; private set; }
-        public PlayerFactory Factory { get; private set; }
         
         private void Awake()
         {
@@ -26,9 +25,8 @@ namespace Entities.Player
             
             // TODO: Remove later
             Text = GetComponentInChildren<TMP_Text>();
-            Factory = new PlayerFactory(this);
             
-            InitializeFactory(Factory);
+            InitializeFactory(new PlayerFactory(this));
             InitializeState(typeof(Idle));
         }
 
