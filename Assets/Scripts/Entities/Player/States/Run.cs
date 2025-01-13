@@ -7,29 +7,26 @@ namespace Entities.Player.States
     {
         private Vector3 _velocity;
 
-        public Run(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public Run(PlayerCore core) : base(core)
         {
             IsRootState = true;
         }
 
-        public override void Enter()
+        protected override void OnEnter()
         {
-            base.Enter();
-            
-            Debug.Log("entered the run state");
             SubState = Core.Factory.GetState(typeof(Wield));
             
             _velocity = Core.Body.linearVelocity;
         }
 
-        public override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
-            
             Accelerate();
             Decelerate();
             Brake();
 
+            Debug.Log(Core.Data.canDash && PlayerInputController.DashKeyPressed && PlayerInputController.MovementDirection != Vector3.zero && _velocity != Vector3.zero);
+            
             Core.Body.linearVelocity = _velocity;
         }
         

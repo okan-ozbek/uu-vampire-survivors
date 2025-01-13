@@ -15,13 +15,13 @@ namespace Entities.Player
 
         protected override void SetStates()
         {
-            AddState(new Idle(_core, this));
-            AddState(new Run(_core, this));
-            AddState(new Dash(_core, this));
-            AddState(new Wield(_core, this));
-            AddState(new Charge(_core, this));
-            AddState(new BasicAttack(_core, this));
-            AddState(new HeavyAttack(_core, this));
+            AddState(new Idle(_core));
+            AddState(new Run(_core));
+            AddState(new Dash(_core));
+            AddState(new Wield(_core));
+            AddState(new Charge(_core));
+            AddState(new BasicAttack(_core));
+            AddState(new HeavyAttack(_core));
         }
     }
 }

@@ -9,24 +9,16 @@ namespace Entities.Player.States
     {
         private bool _stateFinished;
         
-        public Dash(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public Dash(PlayerCore core) : base(core)
         {
             IsRootState = true;
         }
-        
-        public override void Enter()
+
+        protected override void OnEnter()
         {
-            
-            
             PlayerEventConfig.OnPlayerDash?.Invoke(Core.Data.Guid);
-            Debug.Log("current velocity " + Core.Body.linearVelocity);
-            Vector3 dashVelocity = PlayerInputController.MovementDirection * Core.Data.dashPower;
-            Core.Body.linearVelocity = dashVelocity;
-            
-            Core.StartCoroutine(DashRoutine(dashVelocity));
-            // Core.StartCoroutine(DashCooldown());
-            
-            base.Enter();
+            Core.StartCoroutine(DashRoutine());
+            Core.StartCoroutine(DashCooldown());
         }
 
         protected override void SetTransitions()
@@ -34,12 +26,10 @@ namespace Entities.Player.States
             AddTransition(typeof(Run), () => _stateFinished);
         }
 
-        private IEnumerator DashRoutine(Vector3 dashVelocity)
+        private IEnumerator DashRoutine()
         {
             _stateFinished = false;
-            Debug.Log(Core.Body.linearVelocity);
-            Core.Body.linearVelocity = dashVelocity;
-            Debug.Log(Core.Body.linearVelocity);
+            Core.Body.linearVelocity = PlayerInputController.MovementDirection * Core.Data.dashPower;
             
             yield return new WaitForSeconds(Core.Data.dashDuration);
             

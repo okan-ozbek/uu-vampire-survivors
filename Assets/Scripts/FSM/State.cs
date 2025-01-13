@@ -6,42 +6,56 @@ namespace FSM
 {
     public abstract class State
     {
-        public bool IsRootState { get; set; } = false;
-        public State ParentState { get; set; }
-        public State SubState { get; set; }
+        protected  bool IsRootState { get; set; }
         
-        public HashSet<Transition> Transitions { get; }
-        public HashSet<Transition> SubTransitions { get; }
+        public State ParentState { get; protected set; }
+        public State SubState { get; protected set; }
         
-        public StateMachine StateMachine { get; }
-        public StateFactory Factory { get; set; }
+        private HashSet<Transition> Transitions { get; }
+        private HashSet<Transition> SubTransitions { get; }
 
-        protected State(StateMachine stateMachine, StateFactory factory)
+        private StateMachine StateMachine { get; }
+
+        protected State(StateMachine stateMachine)
         {
             Transitions = new HashSet<Transition>();
             SubTransitions = new HashSet<Transition>();
             StateMachine = stateMachine;
-            Factory = factory;
             
             Initialize();
         }
 
-        public virtual void Enter()
+        public void Enter()
         {
-            SubState?.Enter();
+            OnEnter();
+            SubState?.OnEnter();
         }
-
-        public virtual void Exit()
+        
+        public void Exit()
         {
-            SubState?.Exit();
+            SubState?.OnEnter();
+            OnExit();
         }
-
-        public virtual void Update()
+        
+        public void Update()
         {
-            SubState?.Update();
+            OnUpdate();
+            SubState?.OnUpdate();
             
             Transition();
             TransitionSubState();
+        }
+        
+        protected virtual void OnEnter()
+        {
+        }
+
+        protected virtual void OnExit()
+        {
+        }
+
+        protected virtual void OnUpdate()
+        {
         }
 
         protected abstract void SetTransitions();
@@ -73,14 +87,14 @@ namespace FSM
             Exit();
             if (IsRootState)
             {
-                StateMachine.State = Factory.GetState(transition.To);
+                StateMachine.State = StateMachine.Factory.GetState(transition.To);
                 StateMachine.State.Enter();
             }
             else
             {
                 if (ParentState != null)
                 {
-                    ParentState.SubState = Factory.GetState(transition.To);
+                    ParentState.SubState = StateMachine.Factory.GetState(transition.To);
                     ParentState.SubState.Enter();    
                 }
             }
@@ -96,7 +110,7 @@ namespace FSM
             }
             
             SubState?.Exit();
-            SubState = Factory.GetState(transition.To);
+            SubState = StateMachine.Factory.GetState(transition.To);
             SubState.ParentState = this;
             SubState.Enter();
         }

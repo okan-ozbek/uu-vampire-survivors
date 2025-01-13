@@ -6,7 +6,7 @@ namespace Entities.Player.States
     {
         protected readonly PlayerCore Core;
 
-        protected PlayerState(PlayerCore core, StateFactory factory) : base(core, factory)
+        protected PlayerState(PlayerCore core) : base(core)
         {
             Core = core;
         }

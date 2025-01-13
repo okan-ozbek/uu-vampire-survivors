@@ -4,7 +4,7 @@ namespace Entities.Player.States
 {
     public class Wield : PlayerState
     {
-        public Wield(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public Wield(PlayerCore core) : base(core)
         {
         }
         

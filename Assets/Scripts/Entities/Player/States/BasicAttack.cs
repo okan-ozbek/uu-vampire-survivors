@@ -8,14 +8,12 @@ namespace Entities.Player.States
     {
         private bool _isFinished;
         
-        public BasicAttack(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public BasicAttack(PlayerCore core) : base(core)
         {
         }
 
-        public override void Enter()
+        protected override void OnEnter()
         {
-            base.Enter();
-            
             PlayerEventConfig.OnPlayerBasicAttack?.Invoke(Core.Data.Guid);
             Core.StartCoroutine(AttackRoutine());
         }

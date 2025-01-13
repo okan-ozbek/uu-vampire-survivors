@@ -6,7 +6,7 @@ namespace FSM
     public abstract class StateMachine : MonoBehaviour
     {
         public State State { get; set; }
-        private StateFactory Factory { get; set; }
+        public StateFactory Factory { get; private set; }
 
         protected virtual void Update()
         {

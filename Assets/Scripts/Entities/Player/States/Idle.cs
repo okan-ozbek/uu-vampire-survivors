@@ -5,16 +5,13 @@ namespace Entities.Player.States
 {
     public sealed class Idle : PlayerState
     {
-        public Idle(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public Idle(PlayerCore core) : base(core)
         {
             IsRootState = true;
         }
 
-        public override void Enter()
+        protected override void OnEnter()
         {
-            base.Enter();
-            
-            Debug.Log("entered the idle state");
             SubState = Core.Factory.GetState(typeof(Wield));
         }
         

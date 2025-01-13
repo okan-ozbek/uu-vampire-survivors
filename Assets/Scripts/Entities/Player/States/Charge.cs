@@ -13,31 +13,25 @@ namespace Entities.Player.States
 
         private readonly TimeController _timer;
         
-        public Charge(PlayerCore core, PlayerFactory factory) : base(core, factory)
+        public Charge(PlayerCore core) : base(core)
         {
             _timer = new TimeController(ChargeTime);
         }
 
-        public override void Enter()
+        protected override void OnEnter()
         {
-            base.Enter();
-            
             _isFinished = false;
         }
 
-        public override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
-            
             _isFinished = PlayerInputController.AttackKeyReleased;
             
             ChargeTimer();
         }
 
-        public override void Exit()
+        protected override void OnExit()
         {
-            base.Exit();
-            
             ResetParameters();
         }
 
