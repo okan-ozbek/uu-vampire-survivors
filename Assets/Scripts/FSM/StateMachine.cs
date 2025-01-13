@@ -1,18 +1,18 @@
 ﻿using System;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace FSM
 {
     public abstract class StateMachine : MonoBehaviour
     {
-        private State State { get; set; }
+        public State State { get; set; }
         private StateFactory Factory { get; set; }
 
         protected virtual void Update()
         {
             State.Update();
-            Transition();
+
+            Debug.Log(GetTree(State));
         }
 
         protected void InitializeFactory(StateFactory factory)
@@ -25,33 +25,18 @@ namespace FSM
             State = Factory.GetState(stateType);
             State.Enter();
         }
-        
-        private void Transition()
-        {
-            Transition transition = GetTransition();
 
-            if (transition == null)
-            {
-                return;
-            }
-            
-            State?.Exit();
-            State = Factory.GetState(transition.To);
-            State.Enter();
-        }
-
-        [CanBeNull]
-        private Transition GetTransition()
+        // Recursively get all the substates
+        private string GetTree(State state)
         {
-            foreach (var transition in State.Transitions)
+            string tree = state.GetType().Name;
+
+            if (state.SubState != null)
             {
-                if (transition.Condition() && transition.To != typeof(State))
-                {
-                    return transition;
-                }
+                tree += " -> " + GetTree(state.SubState);
             }
 
-            return null;
+            return tree;
         }
     }
 }

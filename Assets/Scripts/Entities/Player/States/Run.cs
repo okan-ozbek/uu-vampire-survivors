@@ -7,17 +7,25 @@ namespace Entities.Player.States
     {
         private Vector3 _velocity;
 
-        public Run(PlayerCore core) : base(core)
+        public Run(PlayerCore core, PlayerFactory factory) : base(core, factory)
         {
+            IsRootState = true;
         }
 
         public override void Enter()
         {
+            base.Enter();
+            
+            Debug.Log("entered the run state");
+            SubState = Core.Factory.GetState(typeof(Wield));
+            
             _velocity = Core.Body.linearVelocity;
         }
 
         public override void Update()
         {
+            base.Update();
+            
             Accelerate();
             Decelerate();
             Brake();
@@ -28,8 +36,9 @@ namespace Entities.Player.States
         protected override void SetTransitions()
         {
             AddTransition(typeof(Idle), () => PlayerInputController.MovementDirection == Vector3.zero && _velocity == Vector3.zero);
-            AddTransition(typeof(Dash), () => PlayerInputController.DashKeyPressed && _velocity != Vector3.zero);
-            AddTransition(typeof(Charge), () => PlayerInputController.AttackKeyPressed);
+            AddTransition(typeof(Dash), () => Core.Data.canDash && PlayerInputController.DashKeyPressed && PlayerInputController.MovementDirection != Vector3.zero && _velocity != Vector3.zero);
+            
+            AddSubTransition(typeof(Charge), () => PlayerInputController.AttackKeyPressed);
         }
 
         private void Accelerate()

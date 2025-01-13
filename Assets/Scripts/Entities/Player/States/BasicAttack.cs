@@ -8,20 +8,23 @@ namespace Entities.Player.States
     {
         private bool _isFinished;
         
-        public BasicAttack(PlayerCore core) : base(core)
+        public BasicAttack(PlayerCore core, PlayerFactory factory) : base(core, factory)
         {
         }
 
         public override void Enter()
         {
+            base.Enter();
+            
             PlayerEventConfig.OnPlayerBasicAttack?.Invoke(Core.Data.Guid);
             Core.StartCoroutine(AttackRoutine());
         }
         
         protected override void SetTransitions()
         {
-            AddTransition(typeof(Run), () => _isFinished && Core.Body.linearVelocity != Vector2.zero);
-            AddTransition(typeof(Idle), () => _isFinished);
+            AddTransition(typeof(Wield), () => _isFinished);
+            // AddTransition(typeof(Run), () => _isFinished && Core.Body.linearVelocity != Vector2.zero);
+            // AddTransition(typeof(Idle), () => _isFinished);
         }
         
         private IEnumerator AttackRoutine()

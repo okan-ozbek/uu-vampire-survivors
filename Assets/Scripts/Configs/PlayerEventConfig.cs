@@ -7,6 +7,7 @@ namespace Configs
     public class PlayerEventConfig : ScriptableObject
     {
         public static Action<Guid> OnPlayerDash;
+        public static Action<Guid, float> OnDashCooldown;
         public static Action<Guid> OnPlayerBasicAttack;
         public static Action<Guid> OnPlayerHeavyAttack;
         public static Action<Guid, int> OnPlayerChargeAttack;

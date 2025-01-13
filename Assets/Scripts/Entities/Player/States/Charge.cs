@@ -1,48 +1,43 @@
 ﻿using Configs;
 using Controllers;
 using Controllers.Player;
-using UnityEngine;
 
 namespace Entities.Player.States
 {
     public class Charge : PlayerState
     {
         private const float ChargeTime = 1f;
-        private float _shakeIntensity = 0.00001f;
         
         private bool _isFinished;
         private int _chargeLevel;
-        
-        // TODO: This would be better in as a substate of Run
-        private Vector2 _velocity;
 
         private readonly TimeController _timer;
         
-        public Charge(PlayerCore core) : base(core)
+        public Charge(PlayerCore core, PlayerFactory factory) : base(core, factory)
         {
             _timer = new TimeController(ChargeTime);
         }
 
         public override void Enter()
         {
-            // TODO: This would be better in as a substate of Run
-            _velocity = Core.Body.linearVelocity;
+            base.Enter();
+            
             _isFinished = false;
         }
 
         public override void Update()
         {
-            Decelerate();
-            Core.Body.linearVelocity = _velocity;
-
+            base.Update();
+            
             _isFinished = PlayerInputController.AttackKeyReleased;
             
             ChargeTimer();
-            ShakeTransform();
         }
 
         public override void Exit()
         {
+            base.Exit();
+            
             ResetParameters();
         }
 
@@ -56,7 +51,6 @@ namespace Entities.Player.States
         {
             _isFinished = false;
             _chargeLevel = 0;
-            _shakeIntensity = 0.00001f;
             
             _timer.Reset();
         }
@@ -66,7 +60,6 @@ namespace Entities.Player.States
             if (_isFinished == false)
             {
                 _timer.Update();
-                _shakeIntensity += 0.00001f;
                 if (_timer.IsFinished() && _chargeLevel == 0)
                 {
                     _chargeLevel++;
@@ -74,41 +67,5 @@ namespace Entities.Player.States
                 }
             }
         }
-
-        private void ShakeTransform()
-        {
-            Vector3 originalPosition = Core.transform.position;
-            float offsetX = Random.Range(-_shakeIntensity, _shakeIntensity);
-            float offsetY = Random.Range(-_shakeIntensity, _shakeIntensity);
-            Core.transform.position = new Vector3(originalPosition.x + offsetX, originalPosition.y + offsetY, originalPosition.z);
-        }
-        
-        // TODO: This would be better in as a substate of Run
-        #region Make substate of run
-        private void Decelerate()
-        {
-            Debug.Log(PlayerInputController.MovementDirection);
-            
-            if (Mathf.Abs(Core.Body.linearVelocity.x) > 0.0f)
-            {
-                SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
-            }
-            
-            if (Mathf.Abs(Core.Body.linearVelocity.y) > 0.0f)
-            {
-                SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
-            }
-        }
-        
-        private void SetMoveTowardsX(float maxDelta)
-        {
-            _velocity.x = Mathf.MoveTowards(_velocity.x, 0.0f, maxDelta);   
-        }
-        
-        private void SetMoveTowardsY(float maxDelta)
-        {
-            _velocity.y = Mathf.MoveTowards(_velocity.y, 0.0f, maxDelta);   
-        }
-        #endregion
     }
 }
