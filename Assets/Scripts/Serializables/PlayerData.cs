@@ -19,5 +19,12 @@ namespace Serializables
         [StepRange(0.1f, 5.0f, 0.1f)]   public float dashDuration;
         [StepRange(1.0f, 10.0f, 1.0f)]  public float dashCooldown;
         public bool canDash;
+        
+        public float BaseMaxSpeed { get; private set; }
+
+        public void Initialize()
+        {
+            BaseMaxSpeed = maxSpeed;
+        }
     }
 }

@@ -1,12 +1,12 @@
-﻿using FSM;
+﻿using HFSM;
 
 namespace Entities.Player.States
 {
     public abstract class PlayerState : State
     {
-        protected readonly PlayerCore Core;
+        protected PlayerCore Core { get; private set; }
 
-        protected PlayerState(PlayerCore core) : base(core)
+        protected PlayerState(PlayerCore core)
         {
             Core = core;
         }

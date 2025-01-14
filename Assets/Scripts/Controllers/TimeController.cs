@@ -4,28 +4,28 @@ namespace Controllers
 {
     public class TimeController
     {
-        private float Duration { get; }
+        public float Duration { get; }
+        public float TimePassed { get; private set; }
 
-        private float _timePassed;
-        
         public TimeController(float duration)
         {
             Duration = duration;
+            TimePassed = 0f;
         }
 
         public void Update()
         {
-            _timePassed += Time.deltaTime;
+            TimePassed += Time.deltaTime;
         }
-        
+
         public bool IsFinished()
         {
-            return _timePassed > Duration;
+            return TimePassed >= Duration;
         }
 
         public void Reset()
         {
-            _timePassed = 0;
+            TimePassed = 0f;
         }
     }
 }

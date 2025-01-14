@@ -1673,8 +1673,8 @@ MonoBehaviour:
     decelerationSpeed: 60
     maxSpeed: 7
     brakeSpeed: 50
-    dashPower: 15
-    dashDuration: 0.2
+    dashPower: 40
+    dashDuration: 3.1000001
     dashCooldown: 3
     canDash: 1
   swordHitbox: {fileID: 516580449}
