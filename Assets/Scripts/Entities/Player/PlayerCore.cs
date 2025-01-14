@@ -27,7 +27,7 @@ namespace Entities.Player
         
         private void Update()
         {
-            StateMachine.Transition(StateMachine.CurrentState);
+            StateMachine.StateTransition.Handle(StateMachine.CurrentState);
             StateMachine.CurrentState.Update();
             
             Debug.Log(StateMachine.GetTree(StateMachine.CurrentState));
