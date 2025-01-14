@@ -1,51 +1,62 @@
-﻿using Configs;
+﻿using System.Collections;
+using Configs;
 using Controllers;
+using Controllers.Player;
 using UnityEngine;
 
 namespace Entities.Player.States
 {
     public class PlayerDash : PlayerState
     {
-        private readonly TimeController _timeController;
-        private Vector3 _direction;
+        private bool _isFinished;
         
         public PlayerDash(PlayerCore core) : base(core)
         {
-            Debug.Log("Called");
-            _timeController = new TimeController(0.1f);
         }
         
         protected override void OnEnter()
         {
             PlayerEventConfig.OnPlayerDash.Invoke(Core.Data.Guid);
-            _direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0.0f).normalized;
+            Core.StartCoroutine(DashRoutine());
+            Core.StartCoroutine(DashCooldown());
         }
 
         protected override void OnExit()
         {
-            Debug.Log("called exit");
-            _timeController.Reset();
+            _isFinished = false;
         }
 
         protected override void OnUpdate()
         {
-            _timeController.Update();
-            if (_timeController.IsFinished() == false)
-            {
-                Core.transform.Translate(_direction * 30f * Time.deltaTime);
-            }
-            
-            
-            //Debug.Log($"{_timeController.Duration}, {_timeController.TimePassed}, {_timeController.IsFinished()}");
         }
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerIdle), () => _timeController.IsFinished());
+            AddTransition(typeof(PlayerIdle), () => _isFinished && Core.Body.linearVelocity.magnitude == 0 && PlayerInputController.MovementDirection == Vector3.zero);
+            AddTransition(typeof(PlayerRun), () => _isFinished && Core.Body.linearVelocity.magnitude > 0 && PlayerInputController.MovementDirection != Vector3.zero);
         }
 
         protected override void SetChildTransitions()
         {
+        }
+        
+        private IEnumerator DashRoutine()
+        {
+            Core.Body.linearVelocity = PlayerInputController.MovementDirection.normalized * Core.Data.dashPower;
+            
+            yield return new WaitForSeconds(Core.Data.dashDuration);
+            
+            _isFinished = true;
+        }
+        
+        private IEnumerator DashCooldown()
+        {
+            Core.Data.canDash = false;
+            PlayerEventConfig.OnDashCooldown?.Invoke(Core.Data.Guid, Core.Data.dashCooldown);
+            
+            yield return new WaitForSeconds(Core.Data.dashCooldown);
+            
+            Core.Data.canDash = true;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Configs;
 using Controllers;
+using Controllers.Player;
 using UnityEngine;
 
 namespace Entities.Player.States
@@ -17,6 +18,10 @@ namespace Entities.Player.States
 
         protected override void OnEnter()
         {
+            ChildState = Core.StateFactory.GetState(typeof(PlayerDecelerate));
+            ChildState.ParentState = this;
+            ChildState.Enter();
+            
             PlayerEventConfig.OnPlayerHeavyAttack.Invoke(Core.Data.Guid);
             
             Core.SwordHitbox.transform.localScale = Vector3.one * 2f;
@@ -42,6 +47,8 @@ namespace Entities.Player.States
 
         protected override void SetChildTransitions()
         {
+            AddChildTransition(typeof(PlayerIdle), () => PlayerInputController.MovementDirection == Vector3.zero && Core.Body.linearVelocity.magnitude == 0);
+            AddChildTransition(typeof(PlayerRun), () => PlayerInputController.MovementDirection != Vector3.zero && Core.Body.linearVelocity.magnitude > 0);
         }
     }
 }

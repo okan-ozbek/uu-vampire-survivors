@@ -13,11 +13,13 @@ namespace Entities.Player
         public GameObject SwordHitbox => swordHitbox;
         public PlayerData Data => data;
         
+        public Rigidbody2D Body { get; set; }
         public IStateFactory StateFactory { get; set; }
         public IStateMachine StateMachine { get; set; }
         
         private void Awake()
         {
+            Body = GetComponent<Rigidbody2D>();
             StateFactory = new PlayerStateFactory(this);
             
             StateMachine = new StateMachine(StateFactory, typeof(PlayerLocomotion));

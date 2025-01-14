@@ -68,8 +68,6 @@ namespace HFSM
         {
             if (isRootState)
             {
-                Debug.Log("Setting state to " + toStateType.Name);
-                
                 CurrentState.Exit();
                 CurrentState = StateFactory.GetState(toStateType);
                 return CurrentState;
@@ -77,8 +75,6 @@ namespace HFSM
 
             if (state.ParentState != null)
             {
-                Debug.Log("Setting state to " + toStateType.Name);
-                
                 state.ParentState.ChildState.Exit();
                 state.ParentState.ChildState = StateFactory.GetState(toStateType);
                 state.ParentState.ChildState.ParentState = state.ParentState;

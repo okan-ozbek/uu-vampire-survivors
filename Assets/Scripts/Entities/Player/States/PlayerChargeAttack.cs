@@ -1,14 +1,18 @@
 ﻿using Configs;
 using Controllers;
+using Controllers.Player;
 using UnityEngine;
 
 namespace Entities.Player.States
 {
     public class PlayerChargeAttack : PlayerState
     {
+        private const float ReduceMaxSpeedBufferTime = 0.15f;
+        
         private readonly TimeController _timeController;
         private bool _isFinished;
         private bool _canTransition;
+        private float _maxSpeed;
         
         public PlayerChargeAttack(PlayerCore core) : base(core)
         {
@@ -23,6 +27,7 @@ namespace Entities.Player.States
             ChildState.ParentState = this;
             ChildState.Enter();
             
+            _maxSpeed = Core.Data.maxSpeed;
             _canTransition = false;
         }
         
@@ -32,6 +37,7 @@ namespace Entities.Player.States
 
             _isFinished = false;
             _canTransition = false;
+            Core.Data.maxSpeed = _maxSpeed;
         }
         
         protected override void OnUpdate()
@@ -42,6 +48,11 @@ namespace Entities.Player.States
             }
             
             _timeController.Update();
+            if (_timeController.TimePassed > ReduceMaxSpeedBufferTime && Core.Data.maxSpeed == _maxSpeed)
+            {
+                Core.Data.maxSpeed *= 0.5f;
+            }
+            
             if (_timeController.IsFinished() && _isFinished == false)
             {
                 _isFinished = true;
@@ -58,8 +69,8 @@ namespace Entities.Player.States
         
         protected override void SetChildTransitions()
         {
-            AddChildTransition(typeof(PlayerIdle), () => new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).magnitude == 0);
-            AddChildTransition(typeof(PlayerRun), () => new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).magnitude > 0);
+            AddChildTransition(typeof(PlayerIdle), () => PlayerInputController.MovementDirection == Vector3.zero && Core.Body.linearVelocity.magnitude == 0);
+            AddChildTransition(typeof(PlayerRun), () => PlayerInputController.MovementDirection != Vector3.zero && Core.Body.linearVelocity.magnitude > 0);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Entities.Player
             
             // Locomotion
             AddState(typeof(PlayerLocomotion), new PlayerLocomotion(Core));
+            AddState(typeof(PlayerDecelerate), new PlayerDecelerate(Core));
             AddState(typeof(PlayerIdle), new PlayerIdle(Core));
             AddState(typeof(PlayerRun), new PlayerRun(Core));
             AddState(typeof(PlayerDash), new PlayerDash(Core));
