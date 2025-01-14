@@ -1,7 +1,7 @@
-﻿using UnityEditor;
+﻿using Entities.Player.States.Child;
 using UnityEngine;
 
-namespace Entities.Player.States
+namespace Entities.Player.States.Root
 {
     public class PlayerLocomotion : PlayerState
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Entities.Player.States
+namespace Entities.Player.States.Child
 {
     public class PlayerIdle : PlayerState
     {

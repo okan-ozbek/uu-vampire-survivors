@@ -1,7 +1,6 @@
-﻿using Controllers.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Entities.Player.States
+namespace Entities.Player.States.Child
 {
     public class PlayerDecelerate : PlayerState
     {

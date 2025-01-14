@@ -1,28 +1,29 @@
 ﻿using Configs;
 using Controllers;
 using Controllers.Player;
+using Entities.Player.States.Child;
 using UnityEngine;
 
-namespace Entities.Player.States
+namespace Entities.Player.States.Root
 {
-    public class PlayerHeavyAttack : PlayerState
+    public class PlayerBasicAttack : PlayerState
     {
         private readonly TimeController _timeController;
         
-        public PlayerHeavyAttack(PlayerCore core) : base(core)
+        public PlayerBasicAttack(PlayerCore core) : base(core)
         {
             EnableRootState();
             
-            _timeController = new TimeController(0.2f);
+            _timeController = new TimeController(5f);
         }
 
         protected override void OnEnter()
         {
             SetChild(typeof(PlayerDecelerate));
             
-            PlayerEventConfig.OnPlayerHeavyAttack.Invoke(Core.Data.Guid);
+            PlayerEventConfig.OnPlayerBasicAttack.Invoke(Core.Data.Guid);
             
-            Core.SwordHitbox.transform.localScale = Vector3.one * 2f;
+            Core.SwordHitbox.transform.localScale = Vector3.one;
             Core.SwordHitbox.SetActive(true);
         }
 

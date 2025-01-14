@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using Configs;
-using Controllers;
 using Controllers.Player;
 using UnityEngine;
 
-namespace Entities.Player.States
+namespace Entities.Player.States.Child
 {
     public class PlayerDash : PlayerState
     {
