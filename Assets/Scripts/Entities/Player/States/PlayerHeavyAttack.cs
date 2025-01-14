@@ -18,9 +18,7 @@ namespace Entities.Player.States
 
         protected override void OnEnter()
         {
-            ChildState = Core.StateFactory.GetState(typeof(PlayerDecelerate));
-            ChildState.ParentState = this;
-            ChildState.Enter();
+            SetChild(typeof(PlayerDecelerate));
             
             PlayerEventConfig.OnPlayerHeavyAttack.Invoke(Core.Data.Guid);
             

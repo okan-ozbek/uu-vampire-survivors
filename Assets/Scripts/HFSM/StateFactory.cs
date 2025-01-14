@@ -25,7 +25,7 @@ namespace HFSM
         
         protected void AddState(Type type, IState state)
         {
-            _states.Add(type, state);
+            _states.TryAdd(type, state);
         }
         
         protected abstract void SetStates();

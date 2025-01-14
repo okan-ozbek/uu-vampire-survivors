@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entities.Player;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace HFSM
         public HashSet<ITransition> Transitions { get; }
         public HashSet<ITransition> ChildTransitions { get; }
         
+        public ICore Core { get; }
+        
         void Enter();
         void Exit();
         void Update();
@@ -22,7 +25,7 @@ namespace HFSM
     
     public abstract class State : IState
     {
-        public bool IsRootState { get; private set; } = false;
+        public bool IsRootState { get; private set; }
         
         public IState ParentState { get; set; }
         public IState ChildState { get; set; }
@@ -30,11 +33,15 @@ namespace HFSM
         public HashSet<ITransition> Transitions { get; private set; }
         public HashSet<ITransition> ChildTransitions { get; private set; }
 
-        protected State()
+        public ICore Core { get; }
+
+        protected State(ICore core)
         {
+            Core = core;
+            
             GetState();
         }
-
+        
         public void Enter()
         {
             OnEnter();
@@ -75,6 +82,13 @@ namespace HFSM
             IsRootState = true;
         }
 
+        protected void SetChild(Type childStateType)
+        {
+            ChildState = Core.StateFactory.GetState(childStateType);
+            ChildState.ParentState = this;
+            ChildState.Enter();
+        }
+        
         private void GetState()
         {
             Transitions = new HashSet<ITransition>();

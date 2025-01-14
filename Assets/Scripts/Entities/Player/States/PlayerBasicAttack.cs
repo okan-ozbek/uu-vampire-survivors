@@ -14,14 +14,12 @@ namespace Entities.Player.States
         {
             EnableRootState();
             
-            _timeController = new TimeController(0.2f);
+            _timeController = new TimeController(5f);
         }
 
         protected override void OnEnter()
         {
-            ChildState = Core.StateFactory.GetState(typeof(PlayerDecelerate));
-            ChildState.ParentState = this;
-            ChildState.Enter();
+            SetChild(typeof(PlayerDecelerate));
             
             PlayerEventConfig.OnPlayerBasicAttack.Invoke(Core.Data.Guid);
             

@@ -37,12 +37,12 @@ namespace Entities.Player.States
         
         private void Decelerate()
         {
-            if (PlayerInputController.MovementDirection.x == 0)
+            if (Core.Body.linearVelocity.x != 0) 
             {
                 SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
             }
             
-            if (PlayerInputController.MovementDirection.y == 0)
+            if (Core.Body.linearVelocity.y != 0) 
             {
                 SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
             }

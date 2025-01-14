@@ -4,9 +4,9 @@ namespace Entities.Player.States
 {
     public abstract class PlayerState : State
     {
-        protected PlayerCore Core { get; private set; }
+        protected new PlayerCore Core { get; private set; }
 
-        protected PlayerState(PlayerCore core)
+        protected PlayerState(PlayerCore core) : base(core)
         {
             Core = core;
         }

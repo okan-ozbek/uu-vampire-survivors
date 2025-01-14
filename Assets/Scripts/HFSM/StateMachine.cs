@@ -26,6 +26,7 @@ namespace HFSM
             StateFactory.GetFactory();
             
             CurrentState = StateFactory.GetState(initialState);
+            CurrentState.Enter();
         }
         
         public string GetTree(IState state)

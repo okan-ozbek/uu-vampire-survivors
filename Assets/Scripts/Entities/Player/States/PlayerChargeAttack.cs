@@ -23,9 +23,7 @@ namespace Entities.Player.States
         
         protected override void OnEnter()
         {
-            ChildState = Core.StateFactory.GetState(typeof(PlayerIdle));
-            ChildState.ParentState = this;
-            ChildState.Enter();
+            SetChild(typeof(PlayerIdle));
             
             _maxSpeed = Core.Data.maxSpeed;
             _canTransition = false;
