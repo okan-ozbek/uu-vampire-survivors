@@ -2,7 +2,7 @@
 
 namespace Controllers.Player
 {
-    public static class PlayerInputController
+    public static class PlayerInput
     {
         public static Vector3 MovementDirection => new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0.0f);
         public static Vector3 NormalizedMovementDirection => MovementDirection.normalized;

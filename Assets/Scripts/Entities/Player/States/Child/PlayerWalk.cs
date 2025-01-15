@@ -1,4 +1,4 @@
-﻿using Controllers.Player;
+﻿using Utility;
 using UnityEngine;
 
 namespace Entities.Player.States.Child
@@ -40,7 +40,7 @@ namespace Entities.Player.States.Child
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerRun), () => PlayerInputController.RunKeyHeld);
+            AddTransition(typeof(PlayerRun), () => PlayerInput.RunKeyHeld);
         }
         
         private void Flip()
@@ -59,7 +59,7 @@ namespace Entities.Player.States.Child
         
         private void Accelerate()
         {
-            if (PlayerInputController.MovementDirection.x != 0)
+            if (PlayerInput.MovementDirection.x != 0)
             {
                 if (Mathf.Abs(Core.Body.linearVelocity.x) > Core.Data.maxSpeed)
                 {
@@ -67,11 +67,11 @@ namespace Entities.Player.States.Child
                 }
                 else
                 {
-                    _velocity.x += PlayerInputController.NormalizedMovementDirection.x * Core.Data.accelerationSpeed * Time.deltaTime;
+                    _velocity.x += PlayerInput.NormalizedMovementDirection.x * Core.Data.accelerationSpeed * Time.deltaTime;
                 }
             }
             
-            if (PlayerInputController.MovementDirection.y != 0)
+            if (PlayerInput.MovementDirection.y != 0)
             {
                 if (Mathf.Abs(Core.Body.linearVelocity.y) > Core.Data.maxSpeed)
                 {
@@ -79,19 +79,19 @@ namespace Entities.Player.States.Child
                 }
                 else
                 {
-                    _velocity.y += PlayerInputController.NormalizedMovementDirection.y * Core.Data.accelerationSpeed * Time.deltaTime;
+                    _velocity.y += PlayerInput.NormalizedMovementDirection.y * Core.Data.accelerationSpeed * Time.deltaTime;
                 }
             }
         }
 
         private void Decelerate()
         {
-            if (PlayerInputController.MovementDirection.x == 0)
+            if (PlayerInput.MovementDirection.x == 0)
             {
                 SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
             }
             
-            if (PlayerInputController.MovementDirection.y == 0)
+            if (PlayerInput.MovementDirection.y == 0)
             {
                 SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
             }
@@ -99,12 +99,12 @@ namespace Entities.Player.States.Child
 
         private void Brake()
         {
-            if (PlayerInputController.MovementDirection.x != 0 && PlayerInputController.MovementDirection.x != Mathf.Sign(_velocity.x))
+            if (PlayerInput.MovementDirection.x != 0 && PlayerInput.MovementDirection.x != Mathf.Sign(_velocity.x))
             {
                 SetMoveTowardsX(Core.Data.brakeSpeed * Time.deltaTime);
             }
             
-            if (PlayerInputController.MovementDirection.y != 0 && PlayerInputController.MovementDirection.y != Mathf.Sign(_velocity.y))
+            if (PlayerInput.MovementDirection.y != 0 && PlayerInput.MovementDirection.y != Mathf.Sign(_velocity.y))
             {
                 SetMoveTowardsY(Core.Data.brakeSpeed * Time.deltaTime);
             }

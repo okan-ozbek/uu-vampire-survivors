@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Configs;
-using Controllers.Player;
+using Utility;
 using UnityEngine;
 
 namespace Entities.Player.States.Child
@@ -27,8 +27,8 @@ namespace Entities.Player.States.Child
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerIdle), () => _isFinished && Core.Body.linearVelocity.magnitude == 0 && PlayerInputController.MovementDirection == Vector3.zero);
-            AddTransition(typeof(PlayerMove), () => _isFinished && Core.Body.linearVelocity.magnitude > 0 && PlayerInputController.MovementDirection != Vector3.zero);
+            AddTransition(typeof(PlayerIdle), () => _isFinished && Core.Body.linearVelocity.magnitude == 0 && PlayerInput.MovementDirection == Vector3.zero);
+            AddTransition(typeof(PlayerMove), () => _isFinished && Core.Body.linearVelocity.magnitude > 0 && PlayerInput.MovementDirection != Vector3.zero);
         }
         
         private IEnumerator DashRoutine()
