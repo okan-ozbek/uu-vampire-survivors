@@ -14,7 +14,6 @@ namespace HFSM
         public IState ChildState { get; set; }
         
         public HashSet<ITransition> Transitions { get; }
-        public HashSet<ITransition> ChildTransitions { get; }
         
         public ICore Core { get; }
         
@@ -31,21 +30,18 @@ namespace HFSM
         public IState ChildState { get; set; }
         
         public HashSet<ITransition> Transitions { get; private set; }
-        public HashSet<ITransition> ChildTransitions { get; private set; }
 
         public ICore Core { get; }
 
         protected State(ICore core)
         {
             Core = core;
-            
-            GetState();
+            SetupState();
         }
         
         public void Enter()
         {
             OnEnter();
-            ChildState?.Enter();
         }
 
         public void Exit()
@@ -60,21 +56,15 @@ namespace HFSM
             ChildState?.Update();
         }
 
-        protected abstract void OnEnter();
-        protected abstract void OnExit();
-        protected abstract void OnUpdate();
+        protected virtual void OnEnter() { }
+        protected virtual void OnExit() { }
+        protected virtual void OnUpdate() { }
         
         protected abstract void SetTransitions();
-        protected abstract void SetChildTransitions();
         
         protected void AddTransition(Type toStateType, Func<bool> condition)
         {
             Transitions.Add(new Transition(toStateType, condition));
-        }
-        
-        protected void AddChildTransition(Type toStateType, Func<bool> condition)
-        {
-            ChildTransitions.Add(new Transition(toStateType, condition));
         }
 
         protected void EnableRootState()
@@ -89,13 +79,10 @@ namespace HFSM
             ChildState.Enter();
         }
         
-        private void GetState()
+        private void SetupState()
         {
             Transitions = new HashSet<ITransition>();
-            ChildTransitions = new HashSet<ITransition>();
-            
             SetTransitions();
-            SetChildTransitions();
         }
     }
 }

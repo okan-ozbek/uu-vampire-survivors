@@ -1,5 +1,4 @@
-﻿using Entities.Player.States;
-using Entities.Player.States.Root;
+﻿using Entities.Player.States.Root;
 using HFSM;
 using Serializables;
 using UnityEngine;
@@ -9,14 +8,13 @@ namespace Entities.Player
     
     public class PlayerCore : Core
     {
-        [SerializeField] private GameObject swordHitbox;
+        [SerializeField] private GameObject swordHitbox; // TODO: This needs to be better
         [SerializeField] private PlayerData data;
         
-        public GameObject SwordHitbox => swordHitbox;
+        public GameObject SwordHitbox => swordHitbox; // TODO: This needs to be better
         public PlayerData Data => data;
         
-        public Rigidbody2D Body { get; set; }
-
+        public Rigidbody2D Body { get; private set; }
         
         private void Awake()
         {
@@ -30,8 +28,6 @@ namespace Entities.Player
         {
             StateMachine.StateTransition.Handle(StateMachine.CurrentState);
             StateMachine.CurrentState.Update();
-            
-            Debug.Log(StateMachine.GetTree(StateMachine.CurrentState));
         }
     }
 }

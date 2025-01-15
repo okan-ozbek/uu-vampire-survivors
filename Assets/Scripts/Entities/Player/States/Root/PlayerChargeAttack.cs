@@ -47,9 +47,9 @@ namespace Entities.Player.States.Root
             }
             
             _timeController.Update();
-            if (_timeController.TimePassed > ReduceMaxSpeedBufferTime && Core.Data.maxSpeed == _maxSpeed)
+            if (_timeController.TimePassed > ReduceMaxSpeedBufferTime)
             {
-                Core.Data.maxSpeed *= 0.5f;
+                Core.Data.maxSpeed = 1.5f;
             }
             
             if (_timeController.IsFinished() && _isFinished == false)
@@ -64,12 +64,6 @@ namespace Entities.Player.States.Root
             AddTransition(typeof(PlayerLocomotion), () => Input.GetKeyDown(KeyCode.Mouse1));
             AddTransition(typeof(PlayerBasicAttack), () => _canTransition && _isFinished == false);
             AddTransition(typeof(PlayerHeavyAttack), () => _canTransition && _isFinished);
-        }
-        
-        protected override void SetChildTransitions()
-        {
-            AddChildTransition(typeof(PlayerIdle), () => PlayerInputController.MovementDirection == Vector3.zero && Core.Body.linearVelocity.magnitude == 0);
-            AddChildTransition(typeof(PlayerRun), () => PlayerInputController.MovementDirection != Vector3.zero && Core.Body.linearVelocity.magnitude > 0);
         }
     }
 }

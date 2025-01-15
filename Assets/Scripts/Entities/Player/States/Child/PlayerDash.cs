@@ -25,18 +25,10 @@ namespace Entities.Player.States.Child
             _isFinished = false;
         }
 
-        protected override void OnUpdate()
-        {
-        }
-
         protected override void SetTransitions()
         {
             AddTransition(typeof(PlayerIdle), () => _isFinished && Core.Body.linearVelocity.magnitude == 0 && PlayerInputController.MovementDirection == Vector3.zero);
-            AddTransition(typeof(PlayerRun), () => _isFinished && Core.Body.linearVelocity.magnitude > 0 && PlayerInputController.MovementDirection != Vector3.zero);
-        }
-
-        protected override void SetChildTransitions()
-        {
+            AddTransition(typeof(PlayerMove), () => _isFinished && Core.Body.linearVelocity.magnitude > 0 && PlayerInputController.MovementDirection != Vector3.zero);
         }
         
         private IEnumerator DashRoutine()

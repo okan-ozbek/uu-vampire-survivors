@@ -3,21 +3,27 @@ using UnityEngine;
 
 namespace Entities.Player.States.Child
 {
-    public class PlayerRun : PlayerState
+    public class PlayerWalk : PlayerState
     {
         private Vector3 _velocity;
         
-        public PlayerRun(PlayerCore core) : base(core)
+        private float _baseMaxSpeed;
+        
+        public PlayerWalk(PlayerCore core) : base(core)
         {
         }
         
         protected override void OnEnter()
         {
             _velocity = Core.Body.linearVelocity;
+            
+            _baseMaxSpeed = Core.Data.maxSpeed;
         }
 
         protected override void OnUpdate()
         {
+            Core.Data.maxSpeed = Mathf.Clamp(Core.Data.maxSpeed, 1.5f, _baseMaxSpeed * 0.5f);
+            
             Accelerate();
             Decelerate();
             Brake();
@@ -26,10 +32,15 @@ namespace Entities.Player.States.Child
             
             Flip();
         }
+        
+        protected override void OnExit()
+        {
+            Core.Data.maxSpeed = _baseMaxSpeed;
+        }
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerWalk), () => PlayerInputController.RunKeyHeld == false);
+            AddTransition(typeof(PlayerRun), () => PlayerInputController.RunKeyHeld);
         }
         
         private void Flip()

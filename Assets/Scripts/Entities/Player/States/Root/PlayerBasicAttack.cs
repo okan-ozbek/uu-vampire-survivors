@@ -14,7 +14,7 @@ namespace Entities.Player.States.Root
         {
             EnableRootState();
             
-            _timeController = new TimeController(5f);
+            _timeController = new TimeController(0.2f);
         }
 
         protected override void OnEnter()
@@ -42,12 +42,6 @@ namespace Entities.Player.States.Root
         protected override void SetTransitions()
         {
             AddTransition(typeof(PlayerLocomotion), () => _timeController.IsFinished());
-        }
-
-        protected override void SetChildTransitions()
-        {
-            AddChildTransition(typeof(PlayerIdle), () => PlayerInputController.MovementDirection == Vector3.zero && Core.Body.linearVelocity.magnitude == 0);
-            AddChildTransition(typeof(PlayerRun), () => PlayerInputController.MovementDirection != Vector3.zero && Core.Body.linearVelocity.magnitude > 0);
         }
     }
 }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace HFSM
 {
@@ -28,15 +29,14 @@ namespace HFSM
         public void Handle(IState state)
         {
             Transition(state.Transitions, state, state.IsRootState);
-            Transition(state.ChildTransitions, state);
 
-            if (state.ChildState != null)
+            if (state?.ChildState != null)
             {
                 Handle(state.ChildState);
             }
         }
 
-        private void Transition(HashSet<ITransition> transitions, IState state, bool isRootState = false)
+        private void Transition(HashSet<ITransition> transitions, IState? state, bool isRootState = false)
         {
             ITransition? transition = GetTransition(transitions);
 
@@ -45,28 +45,37 @@ namespace HFSM
                 return;
             }
             
-            IState? newState = SetState(transition.ToStateType, state, isRootState);
-            newState?.Enter();
+            SetState(transition.ToStateType, state, isRootState);
         }
 
-        private IState? SetState(Type toStateType, IState state, bool isRootState = false)
+        private void SetState(Type toStateType, IState? state, bool isRootState = false)
         {
             if (isRootState)
             {
+                if (StateMachine.CurrentState.GetType() == toStateType)
+                {
+                    return;
+                }
+                
                 StateMachine.CurrentState.Exit();
                 StateMachine.CurrentState = StateFactory.GetState(toStateType);
-                return StateMachine.CurrentState;
+                StateMachine.CurrentState.Enter();
+                
+                return;
             }
-
-            if (state.ParentState != null)
+            
+            if (state?.ParentState != null)
             {
-                state.ParentState.ChildState.Exit();
+                if (state.ParentState.ChildState != null && state.ParentState.ChildState.GetType() == toStateType)
+                {
+                    return;
+                }
+            
+                state.ParentState.ChildState?.Exit();
                 state.ParentState.ChildState = StateFactory.GetState(toStateType);
                 state.ParentState.ChildState.ParentState = state.ParentState;
-                return state.ParentState.ChildState;
+                state.ParentState.ChildState.Enter();
             }
-
-            return null;
         }
         
         private ITransition? GetTransition(HashSet<ITransition> transitions)

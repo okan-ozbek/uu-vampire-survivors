@@ -15,10 +15,6 @@ namespace Entities.Player.States.Child
             _velocity = Core.Body.linearVelocity;
         }
 
-        protected override void OnExit()
-        {
-        }
-
         protected override void OnUpdate()
         {
             Decelerate();
@@ -29,10 +25,7 @@ namespace Entities.Player.States.Child
         protected override void SetTransitions()
         {
         }
-
-        protected override void SetChildTransitions()
-        {
-        }
+        
         
         private void Decelerate()
         {

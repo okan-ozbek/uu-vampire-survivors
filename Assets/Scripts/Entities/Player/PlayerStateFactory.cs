@@ -2,6 +2,7 @@
 using Entities.Player.States.Child;
 using Entities.Player.States.Root;
 using HFSM;
+using Unity.VisualScripting;
 
 namespace Entities.Player
 {
@@ -24,7 +25,9 @@ namespace Entities.Player
             // Locomotion
             AddState(typeof(PlayerLocomotion), new PlayerLocomotion(Core));
             AddState(typeof(PlayerDecelerate), new PlayerDecelerate(Core));
+            AddState(typeof(PlayerMove), new PlayerMove(Core));
             AddState(typeof(PlayerIdle), new PlayerIdle(Core));
+            AddState(typeof(PlayerWalk), new PlayerWalk(Core));
             AddState(typeof(PlayerRun), new PlayerRun(Core));
             AddState(typeof(PlayerDash), new PlayerDash(Core));
         }

@@ -11,5 +11,6 @@ namespace Controllers.Player
         public static bool AttackKeyPressed => Input.GetKeyDown(KeyCode.Mouse0);
         public static bool AttackKeyHeld => Input.GetKey(KeyCode.Mouse0);
         public static bool AttackKeyReleased => Input.GetKeyUp(KeyCode.Mouse0);
+        public static bool RunKeyHeld => Input.GetKey(KeyCode.LeftShift);
     }
 }

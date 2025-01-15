@@ -43,11 +43,6 @@ namespace Entities.Player.States.Root
         {
             AddTransition(typeof(PlayerLocomotion), () => _timeController.IsFinished());
         }
-
-        protected override void SetChildTransitions()
-        {
-            AddChildTransition(typeof(PlayerIdle), () => PlayerInputController.MovementDirection == Vector3.zero && Core.Body.linearVelocity.magnitude == 0);
-            AddChildTransition(typeof(PlayerRun), () => PlayerInputController.MovementDirection != Vector3.zero && Core.Body.linearVelocity.magnitude > 0);
-        }
+        
     }
 }
