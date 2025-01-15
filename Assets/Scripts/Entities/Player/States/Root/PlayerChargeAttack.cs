@@ -19,14 +19,12 @@ namespace Entities.Player.States.Root
         {
             EnableRootState();
             
-            _timeController = new TimeController(1f);
+            Timer = new Timer(1f);
         }
         
         protected override void OnEnter()
         {
-            SetChild(typeof(PlayerIdle));
-            
-            _maxSpeed = Core.Data.maxSpeed;
+            SetChild(typeof(PlayerChargeIdle));
         }
         
         protected override void OnExit()
@@ -34,7 +32,6 @@ namespace Entities.Player.States.Root
             Timer.Reset();
 
             CanTransition = false;
-            Core.Data.maxSpeed = _maxSpeed;
         }
         
         protected override void OnUpdate()
@@ -47,7 +44,7 @@ namespace Entities.Player.States.Root
             Timer.Update();
             if (Timer.TimePassed > ReduceMaxSpeedBufferTime)
             {
-                Core.Data.maxSpeed = 1.5f;
+                Core.Data.maxSpeed = Core.Data.chargeSpeed;
             }
 
             if (Timer.Completed) 

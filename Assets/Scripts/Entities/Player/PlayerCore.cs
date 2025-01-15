@@ -16,10 +16,12 @@ namespace Entities.Player
         public PlayerData Data => data;
         
         public Rigidbody2D Body { get; private set; }
+        public PlayerMovement Movement { get; private set;}
         
         private void Awake()
         {
             Body = GetComponent<Rigidbody2D>();
+            Movement = new PlayerMovement(this);
             
             GetFactory(new PlayerStateFactory(this));
             GetStateMachine(typeof(PlayerLocomotion));
@@ -29,6 +31,8 @@ namespace Entities.Player
         {
             StateMachine.StateTransition.Handle(StateMachine.CurrentState);
             StateMachine.CurrentState.Update();
+
+            Movement.Flip();
         }
 
         private void OnDrawGizmos()

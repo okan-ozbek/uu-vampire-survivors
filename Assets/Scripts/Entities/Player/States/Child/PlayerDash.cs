@@ -33,7 +33,7 @@ namespace Entities.Player.States.Child
         
         private IEnumerator DashRoutine()
         {
-            Core.Body.linearVelocity = PlayerInputController.MovementDirection.normalized * Core.Data.dashPower;
+            Core.Body.linearVelocity = PlayerInput.MovementDirection.normalized * Core.Data.dashPower;
             
             yield return new WaitForSeconds(Core.Data.dashDuration);
             
