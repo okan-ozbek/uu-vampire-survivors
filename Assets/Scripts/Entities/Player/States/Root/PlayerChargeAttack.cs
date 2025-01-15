@@ -10,9 +10,9 @@ namespace Entities.Player.States.Root
     {
         private const float ReduceMaxSpeedBufferTime = 0.15f;
         
-        private readonly TimeController _timeController;
-        private bool _isFinished;
-        private bool _canTransition;
+        private Timer Timer { get; }
+        private bool CanTransition { get; set; }
+
         private float _maxSpeed;
         
         public PlayerChargeAttack(PlayerCore core) : base(core)
@@ -27,15 +27,13 @@ namespace Entities.Player.States.Root
             SetChild(typeof(PlayerIdle));
             
             _maxSpeed = Core.Data.maxSpeed;
-            _canTransition = false;
         }
         
         protected override void OnExit()
         {
-            _timeController.Reset();
+            Timer.Reset();
 
-            _isFinished = false;
-            _canTransition = false;
+            CanTransition = false;
             Core.Data.maxSpeed = _maxSpeed;
         }
         
@@ -43,27 +41,26 @@ namespace Entities.Player.States.Root
         {
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                _canTransition = true;
+                CanTransition = true;
             }
             
-            _timeController.Update();
-            if (_timeController.TimePassed > ReduceMaxSpeedBufferTime)
+            Timer.Update();
+            if (Timer.TimePassed > ReduceMaxSpeedBufferTime)
             {
                 Core.Data.maxSpeed = 1.5f;
             }
-            
-            if (_timeController.IsFinished() && _isFinished == false)
+
+            if (Timer.Completed) 
             {
-                _isFinished = true;
-                PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1);
+                PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1f);
             }
         }
         
         protected override void SetTransitions()
         {
             AddTransition(typeof(PlayerLocomotion), () => Input.GetKeyDown(KeyCode.Mouse1));
-            AddTransition(typeof(PlayerBasicAttack), () => _canTransition && _isFinished == false);
-            AddTransition(typeof(PlayerHeavyAttack), () => _canTransition && _isFinished);
+            AddTransition(typeof(PlayerBasicAttack), () => CanTransition && Timer.Completed == false);
+            AddTransition(typeof(PlayerHeavyAttack), () => CanTransition && Timer.Completed);
         }
     }
 }

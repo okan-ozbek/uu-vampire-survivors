@@ -1,5 +1,5 @@
 ﻿using Configs;
-using Controllers;
+using Timer;
 using Controllers.Player;
 using Entities.Player.States.Child;
 using UnityEngine;
@@ -8,13 +8,13 @@ namespace Entities.Player.States.Root
 {
     public class PlayerHeavyAttack : PlayerState
     {
-        private readonly TimeController _timeController;
+        private Timer Timer { get; }
         
         public PlayerHeavyAttack(PlayerCore core) : base(core)
         {
             EnableRootState();
             
-            _timeController = new TimeController(0.2f);
+            Timer = new Timer(0.2f);
         }
 
         protected override void OnEnter()
@@ -29,19 +29,19 @@ namespace Entities.Player.States.Root
 
         protected override void OnExit()
         {
-            _timeController.Reset();
-            
+            Timer.Reset();
+
             Core.SwordHitbox.SetActive(false);
         }
 
         protected override void OnUpdate()
         {
-            _timeController.Update();
+            Timer.Update();
         }
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerLocomotion), () => _timeController.IsFinished());
+            AddTransition(typeof(PlayerLocomotion), () => Timer.Completed());
         }
         
     }
