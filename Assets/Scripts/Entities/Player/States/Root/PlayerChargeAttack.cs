@@ -7,13 +7,9 @@ using UnityEngine;
 namespace Entities.Player.States.Root
 {
     public class PlayerChargeAttack : PlayerState
-    {
-        private const float ReduceMaxSpeedBufferTime = 0.15f;
-        
+    {   
         private Timer Timer { get; }
         private bool CanTransition { get; set; }
-
-        private float _maxSpeed;
         
         public PlayerChargeAttack(PlayerCore core) : base(core)
         {
@@ -42,11 +38,6 @@ namespace Entities.Player.States.Root
             }
             
             Timer.Update();
-            if (Timer.TimePassed > ReduceMaxSpeedBufferTime)
-            {
-                Core.Data.maxSpeed = Core.Data.chargeSpeed;
-            }
-
             if (Timer.Completed) 
             {
                 PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1f);

@@ -5,26 +5,27 @@ using UnityEngine;
 namespace Serializables
 {
     [Serializable]
-    public class PlayerData : EntityData
+    public class PlayerData
     {
+        public Guid Guid { get; } = Guid.NewGuid();
+
+        [Header("Stats")]
+        public float health;
+        public float stamina;
+
         [Header("Movement")]
-        [StepRange(1.0f, 100.0f, 5.0f)]  public float power;
-        [StepRange(1.0f, 200.0f, 10.0f)] public float accelerationSpeed;
-        [StepRange(1.0f, 200.0f, 10.0f)] public float decelerationSpeed;
-        [StepRange(1.0f, 20.0f, 1.0f)]   public float maxSpeed;
-        [StepRange(1.0f, 100.0f, 5.0f)]  public float brakeSpeed;
+        public float accelerationSpeed;
+        public float decelerationSpeed;
+        public float brakeSpeed;
+        public float maxSpeed;
+        public float walkSpeed;
+        public float runSpeed;
+        public float chargeSpeed;
 
         [Header("Dash")]
-        [StepRange(1.0f, 100.0f, 1.0f)] public float dashPower;
-        [StepRange(0.1f, 5.0f, 0.1f)]   public float dashDuration;
-        [StepRange(1.0f, 10.0f, 1.0f)]  public float dashCooldown;
+        public float dashPower;
+        public float dashDuration;
+        public float dashCooldown;
         public bool canDash;
-        
-        public float BaseMaxSpeed { get; private set; }
-
-        public void Initialize()
-        {
-            BaseMaxSpeed = maxSpeed;
-        }
     }
 }
