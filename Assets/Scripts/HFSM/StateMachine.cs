@@ -35,10 +35,11 @@ namespace HFSM
 
             if (state.ChildState != null)
             {
-                tree += " -> " + GetTree(state.ChildState);
+                tree += " > " + GetTree(state.ChildState);
             }
 
             return tree;
         }
+        
     }
 }
