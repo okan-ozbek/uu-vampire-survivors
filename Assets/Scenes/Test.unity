@@ -1663,21 +1663,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474397544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc3278c396d5419a85c0b0ba5ac9e103, type: 3}
+  m_Script: {fileID: 11500000, guid: c5fea0c7fa7f422eb85c1ea69638c794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    health: 100
-    power: 10
-    accelerationSpeed: 40
-    decelerationSpeed: 60
-    maxSpeed: 7
-    brakeSpeed: 50
-    dashPower: 40
-    dashDuration: 3.1000001
-    dashCooldown: 3
-    canDash: 1
   swordHitbox: {fileID: 516580449}
+  data:
+    health: 0
+    power: 20
+    accelerationSpeed: 80
+    decelerationSpeed: 60
+    maxSpeed: 6
+    brakeSpeed: 40
+    dashPower: 20
+    dashDuration: 0.2
+    dashCooldown: 2
+    canDash: 1
 --- !u!1 &1484734109
 GameObject:
   m_ObjectHideFlags: 0
