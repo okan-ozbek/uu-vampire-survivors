@@ -7,6 +7,12 @@ namespace Entities.Player
     public class PlayerMovement
     {
         private PlayerCore Core { get; }
+        
+        private Vector3 LinearVelocity
+        {
+            get => Core.Body.linearVelocity;
+            set => Core.Body.linearVelocity = value;
+        }
 
         public PlayerMovement(PlayerCore core)
         {
@@ -27,62 +33,75 @@ namespace Entities.Player
             Core.transform.localScale = localScale;
         }
 
-        public void Accelerate(float speed)
+        public void Accelerate(float maxSpeed)
         {
             if (PlayerInput.MovementDirection.x != 0)
             {
-                if (Mathf.Abs(Core.Body.linearVelocity.x) > speed)
+                if (Mathf.Abs(Core.Body.linearVelocity.x) > maxSpeed)
                 {
                     SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    Vector3 velocity = Core.Body.linearVelocity;
+                    Vector3 velocity = LinearVelocity;
                     velocity.x += PlayerInput.NormalizedMovementDirection.x * Core.Data.accelerationSpeed * Time.deltaTime;
-                    Core.Body.linearVelocity = velocity;
+                    LinearVelocity = velocity;
                 }
             }
             
             if (PlayerInput.MovementDirection.y != 0)
             {
-                if (Mathf.Abs(Core.Body.linearVelocity.y) > speed)
+                if (Mathf.Abs(Core.Body.linearVelocity.y) > maxSpeed)
                 {
-                    SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
+                    SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    Vector3 velocity = Core.Body.linearVelocity;
+                    Vector3 velocity = LinearVelocity;
                     velocity.y += PlayerInput.NormalizedMovementDirection.y * Core.Data.accelerationSpeed * Time.deltaTime;
-                    Core.Body.linearVelocity = velocity;
+                    LinearVelocity = velocity;
                 }
             }
         }
 
         public void Decelerate()
         {
-            if (Core.Body.linearVelocity.x != 0)
+            if (PlayerInput.MovementDirection.x == 0)
             {
                 SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
             }
-
-            if (Core.Body.linearVelocity.y != 0)
+            
+            if (PlayerInput.MovementDirection.y == 0)
             {
                 SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
             }
         }
 
-        private void SetMoveTowardsX(float maxDelta)
+        public void Brake()
         {
-            Vector3 velocity = Core.Body.linearVelocity;
-            velocity.x = Mathf.MoveTowards(Core.Body.linearVelocity.x, 0.0f, maxDelta);
-            Core.Body.linearVelocity = velocity;
+            if (PlayerInput.MovementDirection.x != 0 && PlayerInput.MovementDirection.x != Mathf.Sign(LinearVelocity.x))
+            {
+                SetMoveTowardsX(Core.Data.brakeSpeed * Time.deltaTime);
+            }
+            
+            if (PlayerInput.MovementDirection.y != 0 && PlayerInput.MovementDirection.y != Mathf.Sign(LinearVelocity.y))
+            {
+                SetMoveTowardsY(Core.Data.brakeSpeed * Time.deltaTime);
+            }
         }
 
+        private void SetMoveTowardsX(float maxDelta)
+        {
+            Vector3 velocity = LinearVelocity;
+            velocity.x = Mathf.MoveTowards(velocity.x, 0.0f, maxDelta);  
+            LinearVelocity = velocity;
+        }
+        
         private void SetMoveTowardsY(float maxDelta)
         {
-            Vector3 velocity = Core.Body.linearVelocity;
-            velocity.y = Mathf.MoveTowards(Core.Body.linearVelocity.y, 0.0f, maxDelta);
-            Core.Body.linearVelocity = velocity;
+            Vector3 velocity = LinearVelocity;
+            velocity.y = Mathf.MoveTowards(velocity.y, 0.0f, maxDelta);   
+            LinearVelocity = velocity;
         }
     }
 }

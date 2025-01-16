@@ -20,12 +20,15 @@ namespace Entities.Player.States.Root
         protected override void OnEnter()
         {
             SetChild(typeof(PlayerChargeIdle));
+
+            Timer.OnTimerEnd += HandleOnTimerEnd;
         }
         
         protected override void OnExit()
         {
             Timer.Reset();
-
+            Timer.OnTimerEnd -= HandleOnTimerEnd;   
+            
             CanTransition = false;
         }
         
@@ -37,10 +40,6 @@ namespace Entities.Player.States.Root
             }
             
             Timer.Update();
-            if (Timer.Completed) 
-            {
-                PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1);
-            }
         }
         
         protected override void SetTransitions()
@@ -48,6 +47,11 @@ namespace Entities.Player.States.Root
             AddTransition(typeof(PlayerLocomotion), () => Input.GetKeyDown(KeyCode.Mouse1));
             AddTransition(typeof(PlayerBasicAttack), () => CanTransition && Timer.Completed == false);
             AddTransition(typeof(PlayerHeavyAttack), () => CanTransition && Timer.Completed);
+        }
+
+        private void HandleOnTimerEnd()
+        {
+            PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1);
         }
     }
 }

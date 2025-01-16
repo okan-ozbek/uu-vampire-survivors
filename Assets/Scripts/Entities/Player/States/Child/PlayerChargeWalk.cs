@@ -13,6 +13,7 @@ namespace Entities.Player.States.Child
         {
             Core.Movement.Accelerate(Core.Data.chargeSpeed);
             Core.Movement.Decelerate();
+            Core.Movement.Brake();
         }
 
         protected override void SetTransitions()

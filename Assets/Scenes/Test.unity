@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474397544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71866d8a675e4dbf90e2f6e8c54614df, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d5ad34e098848b48b6f7bde6a7e5684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: -8111148860775457746, guid: c1784d77ecbdced4f80535ffe63d5bdd, type: 3}
@@ -1669,11 +1669,14 @@ MonoBehaviour:
   swordHitbox: {fileID: 516580449}
   data:
     health: 0
-    power: 20
+    stamina: 0
     accelerationSpeed: 80
     decelerationSpeed: 60
-    maxSpeed: 6
     brakeSpeed: 40
+    maxSpeed: 6
+    walkSpeed: 4
+    runSpeed: 7
+    chargeSpeed: 1.5
     dashPower: 20
     dashDuration: 0.2
     dashCooldown: 2

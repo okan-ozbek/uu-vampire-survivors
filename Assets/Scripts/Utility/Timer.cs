@@ -11,7 +11,7 @@ namespace Utility
         public float TimePassed { get; private set; }
         public bool Completed { get; private set; }
 
-        private bool _loop;
+        private readonly bool _loop;
 
         public Timer(float duration, bool loop = false)
         {
@@ -31,6 +31,11 @@ namespace Utility
             TimePassed += Time.deltaTime;
             if (TimePassed >= Duration)
             {
+                if (Completed)
+                {
+                    return;
+                }
+                
                 OnTimerEnd?.Invoke();
                 if (_loop == false)
                 {

@@ -9,12 +9,6 @@ namespace Entities.Player.States.Child
         {
         }
 
-        protected override void OnUpdate()
-        {
-            Core.Movement.Accelerate(Core.Data.chargeSpeed);
-            Core.Movement.Decelerate();
-        }
-
         protected override void SetTransitions()
         {
             AddTransition(typeof(PlayerChargeWalk), () => PlayerInput.MovementDirection != Vector3.zero);
