@@ -11,9 +11,8 @@ namespace Entities.Player.States.Child
 
         protected override void OnUpdate()
         {
-            Movement.Accelerate(Core.Data.walkSpeed);
-            Movement.Decelerate();
-            Movement.Brake();
+            Core.Movement.Accelerate(Core.Data.walkSpeed);
+            Core.Movement.Decelerate();
         }
 
         protected override void SetTransitions()

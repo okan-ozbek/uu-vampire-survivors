@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Utility
 {
@@ -8,7 +9,7 @@ namespace Utility
 
         public float Duration { get; }
         public float TimePassed { get; private set; }
-        public bool Completed { get; }
+        public bool Completed { get; private set; }
 
         private bool _loop;
 

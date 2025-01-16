@@ -1,8 +1,7 @@
 ﻿using Configs;
-using Controllers;
-using Controllers.Player;
 using Entities.Player.States.Child;
 using UnityEngine;
+using Utility;
 
 namespace Entities.Player.States.Root
 {
@@ -40,7 +39,7 @@ namespace Entities.Player.States.Root
             Timer.Update();
             if (Timer.Completed) 
             {
-                PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1f);
+                PlayerEventConfig.OnPlayerChargeAttack.Invoke(Core.Data.Guid, 1);
             }
         }
         

@@ -1,8 +1,7 @@
 ﻿using Configs;
-using Timer;
-using Controllers.Player;
 using Entities.Player.States.Child;
 using UnityEngine;
+using Utility;
 
 namespace Entities.Player.States.Root
 {
@@ -41,7 +40,7 @@ namespace Entities.Player.States.Root
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerLocomotion), () => Timer.Completed());
+            AddTransition(typeof(PlayerLocomotion), () => Timer.Completed);
         }
         
     }

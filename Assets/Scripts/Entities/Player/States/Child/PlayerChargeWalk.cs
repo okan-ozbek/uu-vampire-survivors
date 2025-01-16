@@ -1,21 +1,25 @@
-namespace Entities.Player.States.Child;
+using UnityEngine;
+using Utility;
 
-public class PlayerChargeWalk : PlayerState
+namespace Entities.Player.States.Child
 {
-    public PlayerChargeWalk(PlayerCore core) : base(core)
+    public class PlayerChargeWalk : PlayerState
     {
-    }
+        public PlayerChargeWalk(PlayerCore core) : base(core)
+        {
+        }
 
-    protected override void OnUpdate()
-    {
-        Movement.Accelerate(Core.Data.chargeSpeed);
-        Movement.Decelerate();
-        Movement.Brake();
-    }
+        protected override void OnUpdate()
+        {
+            Core.Movement.Accelerate(Core.Data.chargeSpeed);
+            Core.Movement.Decelerate();
+        }
 
-    protected override void SetTransitions()
-    {
-        AddTransition(typeof(PlayerChargeIdle), () => Core.Body.linearVelocity == Vector2.zero && PlayerInput.MovementDirection == Vector3.zero);
-        AddTransition(typeof(PlayerChargeWalk), () => PlayerInput.MovementDirection != Vector3.zero);
-    }
+        protected override void SetTransitions()
+        {
+            AddTransition(typeof(PlayerChargeIdle), () => Core.Body.linearVelocity == Vector2.zero && PlayerInput.MovementDirection == Vector3.zero);
+            AddTransition(typeof(PlayerChargeWalk), () => PlayerInput.MovementDirection != Vector3.zero);
+        }
+    }    
 }
+

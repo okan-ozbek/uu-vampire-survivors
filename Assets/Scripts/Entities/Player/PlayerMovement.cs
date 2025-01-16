@@ -1,65 +1,88 @@
 using UnityEngine;
+using Utility;
 
 namespace Entities.Player
-
-public class PlayerMovement
 {
-    private PlayerCore Core { get; }
 
-    public PlayerMovement(PlayerCore core)
+    public class PlayerMovement
     {
-        Core = core;
-    }
+        private PlayerCore Core { get; }
 
-    public void Flip()
-    {
-        Vector3 localScale = Core.transform.localScale;
-
-        localScale.x = Core.Body.linearVelocity.x switch
+        public PlayerMovement(PlayerCore core)
         {
-            > 0.0f => Mathf.Abs(localScale.x),
-            < 0.0f => -Mathf.Abs(localScale.x),
-            _ => localScale.x
-        };
+            Core = core;
+        }
 
-        Core.transform.localScale = localScale;
-    }
-
-    public Void Accelerate(float speed)
-    {
-        if (PlayerInput.MovementDirection.x != 0)
+        public void Flip()
         {
-            if (Mathf.Abs(Core.Body.linearVelocity.x) > speed)
+            Vector3 localScale = Core.transform.localScale;
+
+            localScale.x = Core.Body.linearVelocity.x switch
+            {
+                > 0.0f => Mathf.Abs(localScale.x),
+                < 0.0f => -Mathf.Abs(localScale.x),
+                _ => localScale.x
+            };
+
+            Core.transform.localScale = localScale;
+        }
+
+        public void Accelerate(float speed)
+        {
+            if (PlayerInput.MovementDirection.x != 0)
+            {
+                if (Mathf.Abs(Core.Body.linearVelocity.x) > speed)
+                {
+                    SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    Vector3 velocity = Core.Body.linearVelocity;
+                    velocity.x += PlayerInput.NormalizedMovementDirection.x * Core.Data.accelerationSpeed * Time.deltaTime;
+                    Core.Body.linearVelocity = velocity;
+                }
+            }
+            
+            if (PlayerInput.MovementDirection.y != 0)
+            {
+                if (Mathf.Abs(Core.Body.linearVelocity.y) > speed)
+                {
+                    SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    Vector3 velocity = Core.Body.linearVelocity;
+                    velocity.y += PlayerInput.NormalizedMovementDirection.y * Core.Data.accelerationSpeed * Time.deltaTime;
+                    Core.Body.linearVelocity = velocity;
+                }
+            }
+        }
+
+        public void Decelerate()
+        {
+            if (Core.Body.linearVelocity.x != 0)
             {
                 SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
             }
-            else
+
+            if (Core.Body.linearVelocity.y != 0)
             {
-                Core.Body.linearVelocity.x += PlayerInput.NormalizedMovementDirection.x * Core.Data.accelerationSpeed * Time.deltaTime;
+                SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
             }
         }
-    }
 
-    public void Decelerate()
-    {
-        if (Core.Body.linearVelocity.x != 0) 
+        private void SetMoveTowardsX(float maxDelta)
         {
-            SetMoveTowardsX(Core.Data.decelerationSpeed * Time.deltaTime);
+            Vector3 velocity = Core.Body.linearVelocity;
+            velocity.x = Mathf.MoveTowards(Core.Body.linearVelocity.x, 0.0f, maxDelta);
+            Core.Body.linearVelocity = velocity;
         }
-        
-        if (Core.Body.linearVelocity.y != 0) 
+
+        private void SetMoveTowardsY(float maxDelta)
         {
-            SetMoveTowardsY(Core.Data.decelerationSpeed * Time.deltaTime);
+            Vector3 velocity = Core.Body.linearVelocity;
+            velocity.y = Mathf.MoveTowards(Core.Body.linearVelocity.y, 0.0f, maxDelta);
+            Core.Body.linearVelocity = velocity;
         }
-    }
-
-    private void SetMoveTowardsX(float maxDelta)
-    {
-        Core.Body.linearVelocity.x = Mathf.MoveTowards(Core.Body.linearVelocity.x, 0.0f, maxDelta);   
-    }
-
-    private void SetMoveTowardsY(float maxDelta)
-    {
-        Core.Body.linearVelocity.y = Mathf.MoveTowards(Core.Body.linearVelocity.y, 0.0f, maxDelta);   
     }
 }
