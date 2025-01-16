@@ -1,5 +1,4 @@
-﻿using Controllers.Player;
-using Entities.Player.States.Child;
+﻿using Entities.Player.States.Child;
 using UnityEngine;
 
 namespace Entities.Player.States.Root

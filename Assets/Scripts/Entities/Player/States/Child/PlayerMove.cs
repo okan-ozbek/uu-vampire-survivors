@@ -1,4 +1,4 @@
-﻿using Controllers.Player;
+﻿using Utility;
 using UnityEngine;
 
 namespace Entities.Player.States.Child
@@ -16,8 +16,8 @@ namespace Entities.Player.States.Child
         
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerDash), () => Input.GetKeyDown(KeyCode.Space) && Core.Data.canDash && PlayerInputController.MovementDirection != Vector3.zero);
-            AddTransition(typeof(PlayerIdle), () => Core.Body.linearVelocity == Vector2.zero && PlayerInputController.MovementDirection == Vector3.zero);
+            AddTransition(typeof(PlayerDash), () => Input.GetKeyDown(KeyCode.Space) && Core.Data.canDash && PlayerInput.MovementDirection != Vector3.zero);
+            AddTransition(typeof(PlayerIdle), () => Core.Body.linearVelocity == Vector2.zero && PlayerInput.MovementDirection == Vector3.zero);
         }
     }
 }

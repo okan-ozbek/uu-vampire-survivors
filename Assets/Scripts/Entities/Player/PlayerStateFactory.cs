@@ -21,10 +21,12 @@ namespace Entities.Player
             AddState(typeof(PlayerChargeAttack), new PlayerChargeAttack(Core));
             AddState(typeof(PlayerBasicAttack), new PlayerBasicAttack(Core));
             AddState(typeof(PlayerHeavyAttack), new PlayerHeavyAttack(Core));
-            
+            AddState(typeof(PlayerDecelerate), new PlayerDecelerate(Core));
+            AddState(typeof(PlayerChargeIdle), new PlayerChargeIdle(Core));
+            AddState(typeof(PlayerChargeWalk), new PlayerChargeWalk(Core));
+
             // Locomotion
             AddState(typeof(PlayerLocomotion), new PlayerLocomotion(Core));
-            AddState(typeof(PlayerDecelerate), new PlayerDecelerate(Core));
             AddState(typeof(PlayerMove), new PlayerMove(Core));
             AddState(typeof(PlayerIdle), new PlayerIdle(Core));
             AddState(typeof(PlayerWalk), new PlayerWalk(Core));

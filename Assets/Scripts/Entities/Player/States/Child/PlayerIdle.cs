@@ -1,4 +1,4 @@
-﻿using Controllers.Player;
+﻿using Utility;
 using UnityEngine;
 
 namespace Entities.Player.States.Child
@@ -11,7 +11,7 @@ namespace Entities.Player.States.Child
         
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerMove), () => PlayerInputController.MovementDirection != Vector3.zero);
+            AddTransition(typeof(PlayerMove), () => PlayerInput.MovementDirection != Vector3.zero);
         }
     }
 }
