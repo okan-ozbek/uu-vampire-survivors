@@ -15,7 +15,10 @@ MonoBehaviour:
   playerDashSFX:
   - {fileID: 8300000, guid: 4ddf9d2019b26a9488e90b1cfe5f62d2, type: 3}
   - {fileID: 8300000, guid: 8ba43008959912a499917778d06dbce2, type: 3}
-  playerAttackSFX:
-  - {fileID: 8300000, guid: 58ca436b8896e294c8feb7fcdd04df0c, type: 3}
-  playerChargeSFX:
-  - {fileID: 8300000, guid: c66a59ce7a446904496c8291a99526da, type: 3}
+  playerHurtSFX:
+  - {fileID: 8300000, guid: dd23c6e5508220e4d9e9440ba242f3cb, type: 3}
+  - {fileID: 8300000, guid: 9665306df6b1a7a4d95c346c92dc8ce5, type: 3}
+  - {fileID: 8300000, guid: 84b5544bf0810d14ea2088d608ac3cd9, type: 3}
+  playerFootstepSFX:
+  - {fileID: 8300000, guid: 37769f472e83c114ca01b6f41b3019ea, type: 3}
+  - {fileID: 8300000, guid: f423d8fd9c5e1ae42a1844f3dbe9f8c4, type: 3}

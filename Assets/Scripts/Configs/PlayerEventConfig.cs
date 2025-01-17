@@ -8,8 +8,9 @@ namespace Configs
     {
         public static Action<Guid> OnPlayerDash;
         public static Action<Guid, float> OnDashCooldown;
-        public static Action<Guid> OnPlayerBasicAttack;
-        public static Action<Guid> OnPlayerHeavyAttack;
-        public static Action<Guid, int> OnPlayerChargeAttack;
+        public static Action<Guid> OnPlayerHurt;
+        public static Action<Guid> OnPlayerAttack;
+        public static Action<Guid> OnPlayerAttackEnd;
+        public static Action<Guid> OnPlayerFootstep;
     }
 }

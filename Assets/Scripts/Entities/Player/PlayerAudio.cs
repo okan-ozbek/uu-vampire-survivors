@@ -10,29 +10,39 @@ namespace Entities.Player
     {
         [SerializeField] private PlayerAudioConfig playerAudioConfig;
         
+        private int _currentFootstepIndex;
+        
         private void OnEnable()
         {
             PlayerEventConfig.OnPlayerDash += HandleOnPlayerDash;
-            PlayerEventConfig.OnPlayerBasicAttack += HandleOnPlayerBasicAttack;
-            PlayerEventConfig.OnPlayerHeavyAttack += HandleOnPlayerHeavyAttack;
-            PlayerEventConfig.OnPlayerChargeAttack += HandleOnPlayerChargeAttack;
+            PlayerEventConfig.OnPlayerHurt += HandleOnPlayerHurt;
+            PlayerEventConfig.OnPlayerAttack += HandleOnPlayerAttack;
+            PlayerEventConfig.OnPlayerAttackEnd += HandleOnPlayerAttackEnd;
+            PlayerEventConfig.OnPlayerFootstep += HandleOnPlayerFootstep;
         }
 
         private void OnDisable()
         {
             PlayerEventConfig.OnPlayerDash -= HandleOnPlayerDash;
-            PlayerEventConfig.OnPlayerBasicAttack -= HandleOnPlayerBasicAttack;
-            PlayerEventConfig.OnPlayerHeavyAttack -= HandleOnPlayerHeavyAttack;
-            PlayerEventConfig.OnPlayerChargeAttack -= HandleOnPlayerChargeAttack;
+            PlayerEventConfig.OnPlayerHurt -= HandleOnPlayerHurt;
+            PlayerEventConfig.OnPlayerAttack -= HandleOnPlayerAttack;
+            PlayerEventConfig.OnPlayerAttackEnd -= HandleOnPlayerAttackEnd;
+            PlayerEventConfig.OnPlayerFootstep -= HandleOnPlayerFootstep;
         }
 
         private void HandleOnPlayerDash(Guid guid) => PlayAudio(playerAudioConfig.playerDashSFX, Random.Range(0.7f, 1.3f));
-        private void HandleOnPlayerBasicAttack(Guid guid) => PlayAudio(playerAudioConfig.playerAttackSFX, Random.Range(0.75f, 1.25f));
-        private void HandleOnPlayerHeavyAttack(Guid guid) => PlayAudio(playerAudioConfig.playerAttackSFX, Random.Range(0.25f, 0.5f));
-        
-        private void HandleOnPlayerChargeAttack(Guid guid, int chargeLevel)
+        private void HandleOnPlayerHurt(Guid guid) => PlayAudio(playerAudioConfig.playerHurtSFX, Random.Range(0.7f, 1.3f));
+        private void HandleOnPlayerAttack(Guid guid) => PlayAudio(playerAudioConfig.playerAttackSFX[0], Random.Range(0.7f, 1.3f), 1.5f);
+        private void HandleOnPlayerAttackEnd(Guid guid) => PlayAudio(playerAudioConfig.playerAttackSFX[1], Random.Range(0.7f, 1.3f));
+
+        private void HandleOnPlayerFootstep(Guid guid)
         {
-            PlayAudio(playerAudioConfig.playerChargeSFX, 1f * (chargeLevel / 4f));   
+            _currentFootstepIndex ^= 1;
+            float pitch = (_currentFootstepIndex == 0)
+                ? Random.Range(0.5f, 0.85f)
+                : Random.Range(1.15f, 1.5f);
+            
+            PlayAudio(playerAudioConfig.playerFootstepSFX, pitch, 0.15f);
         }
     }
 }

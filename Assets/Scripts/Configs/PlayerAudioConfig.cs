@@ -6,7 +6,8 @@ namespace Configs
     public class PlayerAudioConfig : ScriptableObject
     {
         public AudioClip[] playerDashSFX;
+        public AudioClip[] playerHurtSFX;
+        public AudioClip[] playerFootstepSFX;
         public AudioClip[] playerAttackSFX;
-        public AudioClip[] playerChargeSFX;
     }
 }

@@ -9,8 +9,7 @@ namespace Utility
         
         public static bool DashKeyPressed => Input.GetKeyDown(KeyCode.Space);
         public static bool AttackKeyPressed => Input.GetKeyDown(KeyCode.Mouse0);
-        public static bool AttackKeyHeld => Input.GetKey(KeyCode.Mouse0);
-        public static bool AttackKeyReleased => Input.GetKeyUp(KeyCode.Mouse0);
+        public static bool HurtKeyPressed => Input.GetKeyDown(KeyCode.Mouse1);
         public static bool RunKeyHeld => Input.GetKey(KeyCode.LeftShift);
     }
 }
