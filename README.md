@@ -9,16 +9,16 @@ Not sure, the project might only take a few months or maybe the entire year. The
 I am glad you asked, the following list will explain in more detail what projects are on the timeline. 
 | **Genre** | **Description** | **Status** |
 |-------|-------------|--------|
-| Tower defense | A tower defense game where you need to defeat waves of foes, place turrets, upgrade them and keep your endpoint save. The game should include a shop, selling mechanics, placing mechanics and ofcourse, a win/lose condition. | Completed |
-| Vampire survivors | The next game in the list, meant to recreate the cult classic called Vampire Survivors, the game uses a lot of UI forcing us to familiarize us with Unity's UI system, a perfect time to think about the UIToolkit and MVC/MVVP | In-progress |
-| Card game | Think of Hearthstone, Teamfight Tactics, but then created by a single developer in a limited time. The goal is using the Unity UI as your main gameplay loop. Here we can think of using animations to decorate our project! | Not started |
-| Platformer 2D | Moving towards more traditional games, the platformer game is meant to familiarize us with player movement, and game feel. It is also a perfect opportunity to dive deep into the mechanics of a character controller | Not started |
-| Shop keeping simulator | Meant to be our first introduction into management games, forcing us to learn more about concepts like inventory systems, management, and NPC behaviours | Not started |
-| Platformer 3D | Think of Super Mario Oddessy. Adding a third dimension will increase the difficulty by a landslide. This is a perfect opportunity to learn more about character controllers aswel as Unity's camera systems | Not started |
-| Real time strategy | All the focus for this genre would be on NPC behaviour, being able to command your NPC's aswel as fending off against hostile NPC's is a great opportunity to learn more about behaviours, and behaviour trees. | Not started |
-| City builder game | A more in-depth focus on management, this game requires to handle a lot of data all at once, a good opportunity to learn more about Unity's new DOTS system. | Not started |
-| Boss rush (Fury) | Learn more about complicated enemy behaviours and implement a complicated multi-phase boss fight which the player has to defeat. | Not started |
-| Dream game | Now we'd be equipped to start developing on our dream games. The most exciting part! | Not started |
+| Tower defense | A tower defense game where you need to defeat waves of foes, place turrets, upgrade them and keep your endpoint save. The game should include a shop, selling mechanics, placing mechanics and ofcourse, a win/lose condition. | 
+| Vampire survivors | The next game in the list, meant to recreate the cult classic called Vampire Survivors, the game uses a lot of UI forcing us to familiarize us with Unity's UI system, a perfect time to think about the UIToolkit and MVC/MVVP | 
+| Card game | Think of Hearthstone, Teamfight Tactics, but then created by a single developer in a limited time. The goal is using the Unity UI as your main gameplay loop. Here we can think of using animations to decorate our project! | 
+| Platformer 2D | Moving towards more traditional games, the platformer game is meant to familiarize us with player movement, and game feel. It is also a perfect opportunity to dive deep into the mechanics of a character controller | 
+| Shop keeping simulator | Meant to be our first introduction into management games, forcing us to learn more about concepts like inventory systems, management, and NPC behaviours | 
+| Platformer 3D | Think of Super Mario Oddessy. Adding a third dimension will increase the difficulty by a landslide. This is a perfect opportunity to learn more about character controllers aswel as Unity's camera systems | 
+| Real time strategy | All the focus for this genre would be on NPC behaviour, being able to command your NPC's aswel as fending off against hostile NPC's is a great opportunity to learn more about behaviours, and behaviour trees. |
+| City builder game | A more in-depth focus on management, this game requires to handle a lot of data all at once, a good opportunity to learn more about Unity's new DOTS system. | 
+| Boss rush (Fury) | Learn more about complicated enemy behaviours and implement a complicated multi-phase boss fight which the player has to defeat. | 
+| Dream game | Now we'd be equipped to start developing on our dream games. The most exciting part! | 
 
 ### Can we play them?
 Ofcourse, every game will be released on [dorzai.itch.io](https://dorzai.itch.io/), they will be free to play and would love to hear any feedback on how I can improve. My goal is to be as commercially ready to developing my dream game as I can be. My main focus is always perfecting my code which sometimes could also be my downfall.
