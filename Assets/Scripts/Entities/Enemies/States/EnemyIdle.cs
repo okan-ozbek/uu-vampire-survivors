@@ -1,12 +1,11 @@
-﻿using Configs;
-using Unity;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Entities.Enemies.States
 {
     public class EnemyIdle : EnemyState
     {
-        private bool IsHurt { get; set; }
+        private bool IsWaiting { get; set; }
         
         public EnemyIdle(EnemyCore core) : base(core)
         {
@@ -15,13 +14,27 @@ namespace Entities.Enemies.States
 
         protected override void OnEnter()
         {
+            IsWaiting = true;
+            
             Core.Animator.PlayAnimation(EnemyAnimationType.Idle);
+            Core.StartCoroutine(WaitRoutine());
+        }
+        
+        protected override void OnExit()
+        {
+            IsWaiting = true;
         }
         
         protected override void SetTransitions()
         {
-            //AddTransition(typeof(EnemyWalk), () => PlayerInput.MovementDirection != Vector3.zero);
+            AddTransition(typeof(EnemyWalk), () => IsWaiting == false);
             AddTransition(typeof(EnemyHurt), () => Core.Data.isHurt);
+        }
+        
+        private IEnumerator WaitRoutine()
+        {
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            IsWaiting = false;
         }
     }
 }
