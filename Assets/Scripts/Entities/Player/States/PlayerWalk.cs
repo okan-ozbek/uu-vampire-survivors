@@ -35,7 +35,7 @@ namespace Entities.Player.States
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerIdle), () => PlayerInput.MovementDirection == Vector3.zero && Core.Body.linearVelocity == Vector2.zero);
+            AddTransition(typeof(PlayerIdle), () => PlayerInput.MovementDirection == Vector2.zero && Core.Body.linearVelocity == Vector2.zero);
             AddTransition(typeof(PlayerRun), () => PlayerInput.RunKeyHeld);
             AddTransition(typeof(PlayerDash), () => PlayerInput.DashKeyPressed && Core.Data.canDash);
             AddTransition(typeof(PlayerHurt), () => PlayerInput.HurtKeyPressed);

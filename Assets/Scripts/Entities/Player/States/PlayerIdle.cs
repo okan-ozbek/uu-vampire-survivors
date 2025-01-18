@@ -18,7 +18,7 @@ namespace Entities.Player.States
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerRun), () => PlayerInput.MovementDirection != Vector3.zero);
+            AddTransition(typeof(PlayerRun), () => PlayerInput.MovementDirection != Vector2.zero);
             AddTransition(typeof(PlayerHurt), () => PlayerInput.HurtKeyPressed);
             AddTransition(typeof(PlayerAttack), () => PlayerInput.AttackKeyPressed);
         }

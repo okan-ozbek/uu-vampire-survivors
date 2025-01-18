@@ -30,8 +30,8 @@ namespace Entities.Player.States
 
         protected override void SetTransitions()
         {
-            AddTransition(typeof(PlayerIdle), () => _isFinished && PlayerInput.MovementDirection == Vector3.zero && Core.Body.linearVelocity == Vector2.zero);
-            AddTransition(typeof(PlayerRun), () => _isFinished && PlayerInput.MovementDirection != Vector3.zero);
+            AddTransition(typeof(PlayerIdle), () => _isFinished && PlayerInput.MovementDirection == Vector2.zero && Core.Body.linearVelocity == Vector2.zero);
+            AddTransition(typeof(PlayerRun), () => _isFinished && PlayerInput.MovementDirection != Vector2.zero);
             AddTransition(typeof(PlayerHurt), () => PlayerInput.HurtKeyPressed);
         }
         
