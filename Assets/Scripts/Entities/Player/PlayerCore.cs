@@ -8,8 +8,10 @@ namespace Entities.Player
     public class PlayerCore : Core
     {
         [SerializeField] private PlayerData data;
+        [SerializeField] private GameObject attackHitbox;
         
         public PlayerData Data => data;
+        public GameObject AttackHitbox => attackHitbox;
         
         public Rigidbody2D Body { get; private set; }
         public PlayerMovement Movement { get; private set; }

@@ -5,8 +5,8 @@ namespace Animations
 {
     public class SimpleAnimationStateBehaviour : StateMachineBehaviour
     {
-        public static event Action<string> OnAnimationCompleted;
-        public static event Action<string> OnAnimationTriggerActivated;
+        public static event Action<int> OnAnimationCompleted;
+        public static event Action<int> OnAnimationTriggerActivated;
         
         [SerializeField] [Range(0f, 1f)] private float triggerEventAt;
         
@@ -27,13 +27,13 @@ namespace Animations
             if (currentNormalizedTime >= triggerEventAt && TriggeredEvent == false)
             {
                 TriggeredEvent = true;
-                OnAnimationTriggerActivated?.Invoke(name);
+                OnAnimationTriggerActivated?.Invoke(stateInfo.shortNameHash);
             }
             
             if (currentNormalizedTime >= 1f - wiggleRoom && Completed == false)
             {
                 Completed = true;
-                OnAnimationCompleted?.Invoke(name);
+                OnAnimationCompleted?.Invoke(stateInfo.shortNameHash);
             }
         }
     

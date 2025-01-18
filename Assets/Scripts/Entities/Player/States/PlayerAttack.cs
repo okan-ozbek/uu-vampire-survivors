@@ -15,6 +15,9 @@ namespace Entities.Player.States
 
         protected override void OnEnter()
         {
+            Core.AttackHitbox.SetActive(true);
+            Core.Body.WakeUp();
+            
             SimpleAnimationStateBehaviour.OnAnimationCompleted += HandleOnAnimationCompleted;
             SimpleAnimationStateBehaviour.OnAnimationTriggerActivated += HandleOnAnimationTriggerActivated;
             
@@ -25,6 +28,8 @@ namespace Entities.Player.States
 
         protected override void OnExit()
         {
+            Core.AttackHitbox.SetActive(false);
+            
             SimpleAnimationStateBehaviour.OnAnimationCompleted -= HandleOnAnimationCompleted;
             SimpleAnimationStateBehaviour.OnAnimationTriggerActivated -= HandleOnAnimationTriggerActivated;
 
@@ -36,12 +41,12 @@ namespace Entities.Player.States
             AddTransition(typeof(PlayerIdle), () => Completed);
         }
         
-        private void HandleOnAnimationCompleted(string animationName)
+        private void HandleOnAnimationCompleted(int shortNameHash)
         {
             Completed = true;
         }
 
-        private void HandleOnAnimationTriggerActivated(string triggerName)
+        private void HandleOnAnimationTriggerActivated(int shortNameHash)
         {
             PlayerEventConfig.OnPlayerAttackEnd?.Invoke(Core.Data.Guid);
         }

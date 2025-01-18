@@ -34,7 +34,7 @@ namespace Entities.Player.States
             AddTransition(typeof(PlayerIdle), () => Completed);
         }
         
-        private void HandleOnAnimationCompleted(string animationName)
+        private void HandleOnAnimationCompleted(int shortNameHash)
         {
             Completed = true;
         }

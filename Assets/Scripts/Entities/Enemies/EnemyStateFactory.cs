@@ -17,6 +17,7 @@ namespace Entities.Enemies
             AddState(typeof(EnemyIdle), new EnemyIdle(Core));
             AddState(typeof(EnemyWalk), new EnemyWalk(Core));
             AddState(typeof(EnemyHurt), new EnemyHurt(Core));
+            AddState(typeof(EnemyDeath), new EnemyDeath(Core));
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Entities.Enemies
     {
         Idle,
         Walk,
-        Hurt
+        Hurt,
+        Death,
     }
     
     public class EnemyAnimator
