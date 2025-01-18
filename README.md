@@ -7,8 +7,8 @@ Not sure, the project might only take a few months or maybe the entire year. The
 
 ### What games can you expect?
 I am glad you asked, the following list will explain in more detail what projects are on the timeline. 
-| **Genre** | **Description** | **Status** |
-|-------|-------------|--------|
+| **Genre** | **Description** |
+|-------|-------------|
 | Tower defense | A tower defense game where you need to defeat waves of foes, place turrets, upgrade them and keep your endpoint save. The game should include a shop, selling mechanics, placing mechanics and ofcourse, a win/lose condition. | 
 | Vampire survivors | The next game in the list, meant to recreate the cult classic called Vampire Survivors, the game uses a lot of UI forcing us to familiarize us with Unity's UI system, a perfect time to think about the UIToolkit and MVC/MVVP | 
 | Card game | Think of Hearthstone, Teamfight Tactics, but then created by a single developer in a limited time. The goal is using the Unity UI as your main gameplay loop. Here we can think of using animations to decorate our project! | 
