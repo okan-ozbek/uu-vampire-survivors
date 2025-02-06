@@ -5,6 +5,5 @@
         Player,
         Enemy,
         Environment,
-        PlayerAttackHitbox,
     }
 }
