@@ -424,6 +424,8 @@ MonoBehaviour:
   player: {fileID: 1784643726}
   deadzoneSize: {x: 2, y: 1}
   smoothSpeed: 10
+  resetSpeed: 150
+  defaultZoom: 5
 --- !u!1 &643380337
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿
+using Configs;
 using Entities.Player.Factories;
 using Entities.Player.States;
 using HFSM;
